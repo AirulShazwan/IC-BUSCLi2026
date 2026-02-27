@@ -13,40 +13,48 @@
 
   <style>
     :root{
-      --bg0:#070416;
-      --bg1:#0a0720;
-
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.085);
-      --stroke: rgba(255,255,255,.10);
+      /* Option A (Green–Blue “wow”): */
+      --bg0:#050814;
+      --bg1:#070b1d;
 
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.68);
       --muted2: rgba(255,255,255,.55);
 
-      /* Futuristic neon palette (like your reference image) */
-      --violet:#7c3aed;
-      --indigo:#4f46e5;
-      --pink:#ec4899;
-      --cyan:#22d3ee;
-      --lime:#a3ff12;
+      --card: rgba(255,255,255,.06);
+      --stroke: rgba(255,255,255,.10);
 
-      --shadow: 0 18px 70px rgba(0,0,0,.45);
-      --shadow2: 0 18px 40px rgba(124,58,237,.18);
+      /* Green–Blue accents */
+      --lime:#a3ff12;
+      --mint:#35f2c2;
+      --cyan:#22d3ee;
+      --blue:#3b82f6;
+      --violet:#7c3aed; /* keep a touch of depth */
+
+      --shadow: 0 18px 70px rgba(0,0,0,.48);
+      --shadow2: 0 18px 50px rgba(34,211,238,.14);
 
       --radius: 22px;
       --radius2: 16px;
       --max: 1120px;
     }
 
+    /* Option B (if you want slightly “cooler” / less neon):
+      --lime:#7CFF4D;
+      --mint:#2AF5D6;
+      --cyan:#1CCBFF;
+      --blue:#4F8BFF;
+      --violet:#6D28D9;
+    */
+
     *{box-sizing:border-box}
     html, body {height:100%}
     body{
       margin:0;
       background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.18), transparent 60%),
-        radial-gradient(900px 650px at 85% 20%, rgba(34,211,238,.15), transparent 55%),
-        radial-gradient(950px 700px at 55% 85%, rgba(236,72,153,.12), transparent 55%),
+        radial-gradient(1100px 760px at 18% 14%, rgba(163,255,18,.10), transparent 60%),
+        radial-gradient(900px 640px at 86% 22%, rgba(34,211,238,.12), transparent 55%),
+        radial-gradient(900px 640px at 56% 88%, rgba(59,130,246,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       color:var(--text);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -56,9 +64,23 @@
     a{color:inherit; text-decoration:none}
     .container{max-width:var(--max); margin:0 auto; padding: 0 20px;}
     code{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
-    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
 
-    /* Subtle animated noise overlay */
+    /* Animated overlays */
+    #fx{position:fixed; inset:0; width:100vw; height:100vh; z-index:0; opacity:.55;}
+    .gridOverlay{
+      pointer-events:none;
+      position:fixed; inset:0;
+      z-index:0;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 92px 92px;
+      opacity:.06;
+      mask-image: radial-gradient(circle at 50% 36%, black 0%, transparent 72%);
+      animation: gridMove 16s linear infinite;
+    }
+    @keyframes gridMove{from{transform:translateY(0)} to{transform:translateY(92px)}}
+
     .noise{
       pointer-events:none;
       position:fixed; inset:0;
@@ -66,6 +88,7 @@
       mix-blend-mode:overlay;
       opacity:.10;
       animation: noiseMove 9s linear infinite;
+      z-index:0;
     }
     @keyframes noiseMove{
       0%{transform:translate3d(0,0,0)}
@@ -73,19 +96,11 @@
       100%{transform:translate3d(0,0,0)}
     }
 
-    /* Background particles canvas */
-    #fx{
-      position:fixed; inset:0;
-      width:100vw; height:100vh;
-      z-index:0;
-      opacity:.55;
-    }
-
     /* Header */
     header{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(14px);
-      background: rgba(10,7,32,.52);
+      background: rgba(6,10,28,.55);
       border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav{
@@ -100,16 +115,16 @@
       letter-spacing:.3px;
     }
 
-    /* Logo: you can replace the image source anytime */
+    /* Logo placeholder (you will replace image src) */
     .logoWrap{
-      width:38px; height:38px;
+      width:40px; height:40px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,.14);
       background:
         radial-gradient(14px 14px at 30% 30%, rgba(34,211,238,.95), transparent 60%),
-        radial-gradient(16px 16px at 70% 70%, rgba(236,72,153,.95), transparent 60%),
-        linear-gradient(135deg, rgba(124,58,237,.9), rgba(79,70,229,.75));
-      box-shadow: 0 10px 30px rgba(124,58,237,.25);
+        radial-gradient(16px 16px at 70% 70%, rgba(163,255,18,.85), transparent 60%),
+        linear-gradient(135deg, rgba(59,130,246,.60), rgba(34,211,238,.35));
+      box-shadow: 0 10px 30px rgba(34,211,238,.16);
       overflow:hidden;
       position:relative;
       display:grid;
@@ -121,19 +136,18 @@
       object-fit:cover;
       display:block;
     }
-    /* Nice subtle “sheen” even with placeholder */
     .logoWrap:after{
       content:"";
       position:absolute; inset:-60%;
       background: conic-gradient(from 180deg,
         rgba(34,211,238,.0),
-        rgba(34,211,238,.55),
-        rgba(236,72,153,.0),
-        rgba(124,58,237,.55),
+        rgba(34,211,238,.45),
+        rgba(163,255,18,.0),
+        rgba(59,130,246,.42),
         rgba(34,211,238,.0)
       );
-      animation: spin 8s linear infinite;
-      opacity:.35;
+      animation: spin 9s linear infinite;
+      opacity:.28;
       pointer-events:none;
     }
     @keyframes spin{to{transform:rotate(360deg)}}
@@ -153,7 +167,7 @@
       color: var(--text);
     }
 
-    .navcta{display:flex; gap:10px; align-items:center;}
+    /* Buttons */
     .btn{
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       padding:10px 14px;
@@ -168,21 +182,27 @@
     }
     .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18)}
     .btn:active{transform: translateY(0px)}
+
     .btn.primary{
-      border-color: rgba(34,211,238,.30);
-      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(124,58,237,.22));
+      border-color: rgba(34,211,238,.34);
+      background: linear-gradient(135deg, rgba(34,211,238,.18), rgba(59,130,246,.18));
       box-shadow: var(--shadow2);
     }
     .btn.primary:hover{
-      border-color: rgba(34,211,238,.45);
-      background: linear-gradient(135deg, rgba(34,211,238,.22), rgba(236,72,153,.18));
+      border-color: rgba(163,255,18,.26);
+      background: linear-gradient(135deg, rgba(163,255,18,.12), rgba(34,211,238,.18));
     }
-    .btn.small{padding:9px 12px; font-size:13.5px}
     .btn.ghost{
       background: rgba(255,255,255,.05);
       border-color: rgba(255,255,255,.12);
     }
+    .btn.hero{
+      padding: 12px 16px;
+      font-size: 14.5px;
+    }
+    .navcta{display:flex; gap:10px; align-items:center;}
 
+    /* Chips */
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 12px;
@@ -195,18 +215,16 @@
     }
     .dot{
       width:8px; height:8px; border-radius:99px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,0) 60%),
-                  linear-gradient(135deg, var(--cyan), var(--pink));
-      box-shadow: 0 0 18px rgba(34,211,238,.45);
+      background: linear-gradient(135deg, var(--lime), var(--cyan));
+      box-shadow: 0 0 18px rgba(34,211,238,.35);
     }
 
     /* Hero */
     main{position:relative; z-index:1;}
     .hero{position:relative; padding: 56px 0 24px;}
-
     .heroGrid{
       display:grid;
-      grid-template-columns: 1.25fr .85fr;
+      grid-template-columns: 1.18fr .92fr;
       gap: 22px;
       align-items:stretch;
     }
@@ -223,43 +241,101 @@
       content:"";
       position:absolute; inset:-2px;
       background:
-        radial-gradient(420px 280px at 20% 20%, rgba(34,211,238,.18), transparent 60%),
-        radial-gradient(380px 260px at 80% 20%, rgba(236,72,153,.14), transparent 60%),
-        radial-gradient(520px 380px at 60% 90%, rgba(124,58,237,.18), transparent 60%);
+        radial-gradient(420px 280px at 20% 20%, rgba(34,211,238,.14), transparent 60%),
+        radial-gradient(420px 280px at 80% 15%, rgba(163,255,18,.10), transparent 60%),
+        radial-gradient(520px 380px at 65% 90%, rgba(59,130,246,.12), transparent 60%);
       opacity:.9;
       pointer-events:none;
     }
 
-    .heroLeft{padding: 26px 26px 22px; min-height: 430px;}
-    .kicker{
-      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
-      margin-bottom:14px;
-    }
+    .heroLeft{padding: 26px 26px 22px; min-height: 450px;}
+    .kicker{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px;}
+
     h1{
       margin: 12px 0 10px;
       font-family: "Space Grotesk", Inter, system-ui;
-      font-size: clamp(34px, 4.2vw, 54px);
+      font-size: clamp(34px, 4.2vw, 56px);
       line-height: 1.02;
       letter-spacing: -0.6px;
     }
     .gradText{
-      background: linear-gradient(90deg, rgba(34,211,238,.98), rgba(124,58,237,.95), rgba(236,72,153,.95));
+      background: linear-gradient(90deg, rgba(163,255,18,.92), rgba(34,211,238,.95), rgba(59,130,246,.90));
       -webkit-background-clip:text; background-clip:text;
       color:transparent;
-      filter: drop-shadow(0 18px 40px rgba(124,58,237,.18));
+      filter: drop-shadow(0 18px 40px rgba(34,211,238,.14));
     }
+
     .subtitle{
       color: var(--muted);
       font-size: 15.5px;
-      line-height: 1.7;
-      max-width: 62ch;
-      margin: 0 0 18px;
+      line-height: 1.75;
+      max-width: 66ch;
+      margin: 0 0 14px;
     }
-    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; margin-top: 16px;}
+
+    /* Theme: bigger + more “wow” */
+    .themeQuote{
+      margin: 10px 0 16px;
+      padding: 14px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .themeQuote:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(90deg, rgba(163,255,18,.20), rgba(34,211,238,.18), rgba(59,130,246,.18));
+      opacity:.35;
+      filter: blur(10px);
+      pointer-events:none;
+    }
+    .themeQuote > *{position:relative; z-index:1}
+    .themeQuote .label{
+      display:flex; align-items:center; gap:8px;
+      font-size: 12px;
+      letter-spacing:.22px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      margin-bottom: 8px;
+    }
+    .themeQuote .quote{
+      font-family: "Space Grotesk", Inter, system-ui;
+      font-weight: 700;
+      font-size: clamp(18px, 1.7vw, 22px);
+      line-height: 1.35;
+      letter-spacing: -0.25px;
+      color: rgba(255,255,255,.93);
+      margin:0;
+    }
+
+    /* Strategic placement: ONE external link area only (here) */
+    .accessBar{
+      margin-top: 12px;
+      display:flex; flex-wrap:wrap; gap:12px;
+      align-items:center;
+      padding: 12px 12px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .accessBar .hint{
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.4;
+      flex: 1 1 220px;
+      min-width: 220px;
+    }
+    .accessBar .actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+      flex: 1 1 240px;
+    }
 
     /* Highlight row: Venue / Date / Email */
     .keyRow{
-      margin-top: 18px;
+      margin-top: 14px;
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
@@ -276,20 +352,20 @@
       content:"";
       position:absolute; inset:-2px;
       background: linear-gradient(90deg,
-        rgba(34,211,238,.30),
-        rgba(124,58,237,.24),
-        rgba(236,72,153,.26)
+        rgba(163,255,18,.26),
+        rgba(34,211,238,.22),
+        rgba(59,130,246,.22)
       );
       opacity:.30;
-      filter: blur(8px);
+      filter: blur(10px);
       pointer-events:none;
     }
     .keyCard > *{position:relative; z-index:1}
     .keyLabel{
       display:flex; align-items:center; gap:8px;
-      color: rgba(255,255,255,.70);
-      font-size: 12.5px;
-      letter-spacing:.2px;
+      color: rgba(255,255,255,.72);
+      font-size: 12.3px;
+      letter-spacing:.22px;
       text-transform: uppercase;
     }
     .keyValue{
@@ -297,14 +373,15 @@
       font-family: "Space Grotesk", Inter, system-ui;
       font-weight:700;
       letter-spacing:-.2px;
-      font-size: 16px;
-      line-height:1.2;
+      font-size: 16.5px;
+      line-height:1.25;
       color: rgba(255,255,255,.92);
+      word-break: break-word;
     }
     .pulse{
       width:8px; height:8px; border-radius:999px;
-      background: linear-gradient(135deg, var(--cyan), var(--pink));
-      box-shadow: 0 0 18px rgba(34,211,238,.40);
+      background: linear-gradient(135deg, var(--lime), var(--cyan));
+      box-shadow: 0 0 18px rgba(34,211,238,.32);
       animation: pulse 2.4s ease-in-out infinite;
     }
     @keyframes pulse{
@@ -312,12 +389,15 @@
       50%{transform:scale(1.25); opacity:.70}
     }
 
-    .heroRight{padding: 18px; display:flex; flex-direction:column; gap:14px; min-height:430px;}
+    /* Right side */
+    .heroRight{padding: 18px; display:flex; flex-direction:column; gap:14px; min-height:450px;}
     .panel{
       background: rgba(0,0,0,.20);
       border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius2);
       padding: 16px 16px;
+      position:relative;
+      overflow:hidden;
     }
     .panel h3{
       margin:0 0 10px;
@@ -335,50 +415,62 @@
     .ico{
       width:34px; height:34px; border-radius: 12px;
       border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(124,58,237,.16));
+      background: linear-gradient(135deg, rgba(34,211,238,.12), rgba(59,130,246,.12));
       display:flex; align-items:center; justify-content:center;
       flex: 0 0 auto;
       box-shadow: 0 18px 40px rgba(0,0,0,.24);
     }
     .ico svg{opacity:.95}
 
-    .pillGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .confCard{
-      position:relative;
-      padding: 14px 14px;
+    /* Theme image (comment: replace src later) */
+    .themeMedia{
       border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(0,0,0,.18));
+      border: 1px solid rgba(255,255,255,.10);
       overflow:hidden;
+      background: rgba(0,0,0,.18);
+      position:relative;
+      transform: translateZ(0);
     }
-    .confCard:before{
+    .themeMedia:before{
       content:"";
-      position:absolute; inset:-40%;
-      background: conic-gradient(from 220deg, rgba(34,211,238,.0), rgba(34,211,238,.32), rgba(236,72,153,.0), rgba(124,58,237,.32), rgba(34,211,238,.0));
-      opacity:.55;
-      animation: spin 10s linear infinite;
+      position:absolute; inset:0;
+      background: radial-gradient(420px 260px at 20% 20%, rgba(34,211,238,.18), transparent 60%),
+                  radial-gradient(420px 260px at 80% 30%, rgba(163,255,18,.14), transparent 60%),
+                  radial-gradient(520px 320px at 55% 90%, rgba(59,130,246,.14), transparent 60%);
+      opacity:.9;
       pointer-events:none;
     }
-    .confCard > *{position:relative; z-index:1}
-    .confTitle{
-      font-family:"Space Grotesk", Inter, system-ui;
-      font-weight:700;
-      margin: 0 0 6px;
-      letter-spacing: -.2px;
+    .themeMedia img{
+      width:100%;
+      height: 210px;
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.05) contrast(1.03);
+      opacity:.95;
     }
-    .confDesc{margin:0; color: var(--muted); font-size: 13.5px; line-height:1.55}
-    .confActions{margin-top:12px; display:flex; gap:10px; flex-wrap:wrap}
+    .themeMedia .caption{
+      position:absolute;
+      left:12px; right:12px; bottom:12px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.42);
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.88);
+      font-size: 13.5px;
+      line-height:1.4;
+    }
+    .themeMedia .caption strong{
+      font-family:"Space Grotesk", Inter, system-ui;
+      letter-spacing:-.2px;
+    }
 
     /* Floating shapes */
     .shape{
       position:absolute;
       width: 140px; height: 140px;
       border-radius: 28px;
-      background: linear-gradient(135deg, rgba(124,58,237,.20), rgba(34,211,238,.12));
+      background: linear-gradient(135deg, rgba(34,211,238,.14), rgba(59,130,246,.10));
       border:1px solid rgba(255,255,255,.10);
       opacity:.9;
       transform: rotate(18deg);
@@ -398,15 +490,20 @@
     section{padding: 22px 0}
     .sectionHead{
       display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
-      margin: 22px 0 14px;
+      margin: 18px 0 14px;
     }
     .sectionHead h2{
       margin:0;
       font-family: "Space Grotesk", Inter, system-ui;
       font-size: 22px;
       letter-spacing: -.25px;
+
+      /* Different colour for headings */
+      background: linear-gradient(90deg, rgba(163,255,18,.92), rgba(34,211,238,.95), rgba(59,130,246,.90));
+      -webkit-background-clip:text; background-clip:text;
+      color: transparent;
     }
-    .sectionHead p{margin:0; color: var(--muted); max-width: 70ch; font-size: 14px; line-height:1.6}
+    .sectionHead p{margin:0; color: var(--muted); max-width: 72ch; font-size: 14px; line-height:1.7}
 
     .grid3{
       display:grid;
@@ -429,6 +526,7 @@
       font-size: 18px;
     }
     .card p{margin:0; color: var(--muted); line-height:1.65; font-size: 14px}
+
     .tags{
       margin-top: 12px;
       display:flex; flex-wrap:wrap; gap:8px;
@@ -497,7 +595,7 @@
       width:min(560px, 100%);
       border-radius: 22px;
       border:1px solid rgba(255,255,255,.12);
-      background: linear-gradient(180deg, rgba(16,10,42,.92), rgba(8,6,24,.92));
+      background: linear-gradient(180deg, rgba(10,14,34,.92), rgba(6,8,22,.92));
       box-shadow: 0 18px 80px rgba(0,0,0,.55);
       padding: 18px 18px;
       position:relative;
@@ -513,9 +611,8 @@
 
     /* Responsive */
     @media (max-width: 980px){
-      .heroGrid{grid-template-columns: 1fr; }
-      .heroLeft{min-height:auto}
-      .heroRight{min-height:auto}
+      .heroGrid{grid-template-columns: 1fr;}
+      .heroLeft,.heroRight{min-height:auto}
       .timeline{grid-template-columns: repeat(3, 1fr)}
       .grid3{grid-template-columns: 1fr}
       .navlinks{display:none}
@@ -523,19 +620,20 @@
     }
     @media (max-width: 520px){
       .timeline{grid-template-columns: repeat(2, 1fr)}
-      .pillGrid{grid-template-columns: 1fr}
+      .accessBar .actions{justify-content:flex-start}
     }
 
     /* Respect reduced motion */
     @media (prefers-reduced-motion: reduce){
       *{animation:none !important; transition:none !important; scroll-behavior:auto !important}
-      #fx{display:none}
+      #fx,.gridOverlay{display:none}
     }
   </style>
 </head>
 
 <body>
   <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="gridOverlay" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
 
   <header>
@@ -543,23 +641,24 @@
       <div class="nav">
         <a class="brand" href="#top" aria-label="IC-BUSCLi 2026 Home">
           <span class="logoWrap" aria-hidden="true" title="Replace this logo image anytime">
-            <!-- Replace src with your logo file (e.g. assets/logo.png) -->
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Crect width='76' height='76' rx='16' fill='rgba(255,255,255,0.10)'/%3E%3Cpath d='M18 40c8-16 20-18 40-10-6 18-20 28-40 10Z' fill='rgba(255,255,255,0.55)'/%3E%3C/svg%3E" alt="IC-BUSCLi logo placeholder">
+            <!-- Replace src with your logo (e.g. assets/logo.png) -->
+            <img
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' rx='16' fill='rgba(255,255,255,0.10)'/%3E%3Cpath d='M18 46c10-20 26-22 46-12-6 22-24 34-46 12Z' fill='rgba(255,255,255,0.56)'/%3E%3C/svg%3E"
+              alt="IC-BUSCLi logo placeholder">
           </span>
           <span>IC-BUSCLi <span style="opacity:.8">2026</span></span>
         </a>
 
         <nav class="navlinks" aria-label="Navigation">
-          <a href="#about">About</a>
+          <a href="#overview">Overview</a>
           <a href="#theme">Theme</a>
           <a href="#tracks">Tracks</a>
           <a href="#dates">Key Dates</a>
-          <a href="#connect">Links</a>
         </nav>
 
         <div class="navcta">
-          <a class="btn" href="#connect">Conference Links</a>
-          <a class="btn primary" href="#dates">Call for Papers</a>
+          <a class="btn ghost" href="#dates">Key Dates</a>
+          <a class="btn primary" href="#overview">Explore</a>
         </div>
       </div>
     </div>
@@ -567,36 +666,52 @@
 
   <main id="top">
     <div class="container">
+
       <section class="hero">
         <div class="heroGrid">
+
+          <!-- LEFT -->
           <div class="glass heroLeft reveal">
             <div class="shape s1" style="--r:18deg"></div>
             <div class="shape s2" style="--r:-18deg"></div>
             <div class="shape s3" style="--r:0deg"></div>
 
             <div class="kicker">
-              <span class="chip"><span class="dot"></span> Combining two main conference <strong>CSI</strong> & <strong>ICIBMAH</strong></span>
+              <span class="chip"><span class="dot"></span> One umbrella. Two conferences: <strong>CSI</strong> & <strong>ICIBMAH</strong></span>
               <span class="chip"><span class="dot"></span> Hybrid • Penang, Malaysia</span>
             </div>
 
             <h1>
               <span class="gradText">IC-BUSCLi 2026</span><br/>
-              a modern conference gateway
+              a premium conference gateway
             </h1>
 
             <p class="subtitle">
-<i>"Synergizing Strategic Leadership, Sustainable Innovation, and Human-Centred AI in a Disruptive
-Global Economy”</i>
+              Designed to feel modern, elegant, and effortless—so your visitors can understand the event in seconds and move straight to the right conference.
             </p>
 
-            <div class="ctaRow" role="group" aria-label="Conference Links">
-              <a class="btn primary" id="btnCSI" href="#" rel="noopener">
-                <span aria-hidden="true">↗</span> Open CSI
-              </a>
-              <a class="btn" id="btnICIBMAH" href="#" rel="noopener">
-                <span aria-hidden="true">↗</span> Open ICIBMAH
-              </a>
-              <a class="btn ghost" href="#about">Explore details</a>
+            <!-- Theme (bigger) -->
+            <div class="themeQuote">
+              <div class="label"><span class="dot" aria-hidden="true"></span> Conference Theme</div>
+              <p class="quote">
+                “Synergizing Strategic Leadership, Sustainable Innovation, and Human-Centred AI in a Disruptive Global Economy”
+              </p>
+            </div>
+
+            <!-- ONE strategic external link area only -->
+            <div class="accessBar" aria-label="Conference access">
+              <div class="hint">
+                <strong style="color:rgba(255,255,255,.90)">Go to the main conference sites</strong><br/>
+                Choose your stream below.
+              </div>
+              <div class="actions">
+                <a class="btn primary hero" id="btnCSI" href="#" rel="noopener">
+                  <span aria-hidden="true">↗</span> CSI Website
+                </a>
+                <a class="btn hero" id="btnICIBMAH" href="#" rel="noopener">
+                  <span aria-hidden="true">↗</span> ICIBMAH Website
+                </a>
+              </div>
             </div>
 
             <!-- Highlighted key details -->
@@ -611,12 +726,29 @@ Global Economy”</i>
               </div>
               <div class="keyCard">
                 <div class="keyLabel"><span class="pulse" aria-hidden="true"></span> Email</div>
-                <div class="keyValue">icbuscli@unimap.edu.my</div>
+                <div class="keyValue"><a href="mailto:icbuscli@unimap.edu.my">icbuscli@unimap.edu.my</a></div>
               </div>
             </div>
           </div>
 
+          <!-- RIGHT -->
           <div class="glass heroRight reveal" style="padding:18px;">
+            <!-- Theme image panel -->
+            <div class="panel">
+              <h3>Theme visual</h3>
+
+              <div class="themeMedia" id="tiltCard" aria-label="Theme image">
+                <!-- Replace src with your theme image (e.g. theme.jpeg) -->
+                <img
+                  src="theme.jpeg"
+                  alt="Theme image placeholder">
+
+                <div class="caption">
+                  <strong>Human-centred AI</strong> • leadership • sustainable innovation • global economy
+                </div>
+              </div>
+            </div>
+
             <div class="panel">
               <h3>At a glance</h3>
               <div class="metaRow">
@@ -627,7 +759,7 @@ Global Economy”</i>
                     </svg>
                   </div>
                   <div>
-                    <div style="color:var(--text); font-weight:700">1 September 2026 (Mon)</div>
+                    <div style="color:var(--text); font-weight:700">1 September 2026 (Monday)</div>
                     <div>Hybrid session • Corporate / Batik</div>
                   </div>
                 </div>
@@ -641,7 +773,7 @@ Global Economy”</i>
                   </div>
                   <div>
                     <div style="color:var(--text); font-weight:700">PWCC, Penang</div>
-                    <div>In-person + Online</div>
+                    <div>In-person + Online participation</div>
                   </div>
                 </div>
 
@@ -653,31 +785,8 @@ Global Economy”</i>
                     </svg>
                   </div>
                   <div>
-                    <div style="color:var(--text); font-weight:700">icbuscli@unimap.edu.my</div>
+                    <div style="color:var(--text); font-weight:700"><a href="mailto:icbuscli@unimap.edu.my">icbuscli@unimap.edu.my</a></div>
                     <div>Tel: +604 979 8369</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="panel">
-              <h3>Go to the main conferences</h3>
-              <div class="pillGrid">
-                <div class="confCard">
-                  <div class="confTitle">CSI</div>
-                  <p class="confDesc">Scientific communication, language, and AI-related conversations.</p>
-                  <div class="confActions">
-                    <a class="btn small primary" id="btnCSI2" href="#" rel="noopener">Open CSI</a>
-                    <a class="btn small ghost" href="#tracks">View tracks</a>
-                  </div>
-                </div>
-
-                <div class="confCard">
-                  <div class="confTitle">2nd ICIBMAH</div>
-                  <p class="confDesc">Business, management, engineering, and humanities stream.</p>
-                  <div class="confActions">
-                    <a class="btn small" id="btnICIBMAH2" href="#" rel="noopener">Open ICIBMAH</a>
-                    <a class="btn small ghost" href="#dates">Key dates</a>
                   </div>
                 </div>
               </div>
@@ -685,36 +794,37 @@ Global Economy”</i>
 
             <div class="panel" style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
               <div>
-                <div style="font-family:'Space Grotesk', Inter; font-weight:700; letter-spacing:-.2px">Planning your submission?</div>
-                <div style="color:var(--muted); font-size:13.5px; line-height:1.5">Scroll for deadlines and payment window.</div>
+                <div style="font-family:'Space Grotesk', Inter; font-weight:700; letter-spacing:-.2px">Submitting a paper?</div>
+                <div style="color:var(--muted); font-size:13.5px; line-height:1.5">Scroll down to check deadlines and payment window.</div>
               </div>
               <a class="btn primary" href="#dates">View timeline →</a>
             </div>
           </div>
+
         </div>
       </section>
 
-      <section id="about">
-<br><br>
+      <!-- GENERAL INFO (new) -->
+      <section id="overview">
         <div class="sectionHead">
           <div>
-            <h2>About IC-BUSCLi 2026</h2>
-            <p>A conference that unites CSI and ICIBMAH under one umbrella</p>
+            <h2>General information</h2>
+            <p>IC-BUSCLi 2026 serves as the umbrella gateway connecting two main conferences—CSI and ICIBMAH—under a shared theme and unified experience.</p>
           </div>
         </div>
 
         <div class="grid3">
           <div class="card reveal">
-            <h3>One entry point</h3>
-            <p>Visitors arrive here first, then choose the conference that fits—without hunting for links or switching pages.</p>
+            <h3>What is IC-BUSCLi?</h3>
+            <p>A single entry point that brings together two conference streams. Guests choose their preferred track—without confusion, duplicated links, or extra pages.</p>
           </div>
           <div class="card reveal">
-            <h3>Hybrid-ready</h3>
-            <p>Designed for in-person attendees at PWCC and remote participants who join online.</p>
+            <h3>Format & experience</h3>
+            <p>Hybrid by design: attend physically at PWCC, Penang, or join online. Built to feel premium—clean visuals, subtle motion, and fast navigation.</p>
           </div>
           <div class="card reveal">
-            <h3>Global collaboration</h3>
-            <p>Organised by UniMAP (FPK) in collaboration with international partners.</p>
+            <h3>Who should join?</h3>
+            <p>Researchers, academics, practitioners, and postgraduate students across business, communication, language, technology, and human-centred AI.</p>
           </div>
         </div>
       </section>
@@ -728,11 +838,11 @@ Global Economy”</i>
         </div>
 
         <div class="card reveal">
-          <h3 style="margin-bottom:10px">
+          <h3 style="margin-bottom:10px; font-size: clamp(22px, 2.2vw, 30px); line-height:1.25;">
             “Synergizing Strategic Leadership, Sustainable Innovation, and Human-Centred AI in a Disruptive Global Economy”
           </h3>
           <p>
-            This theme blends business, communication, language/linguistics and technology—so the conversation stays practical, ethical, and human.
+            A theme that keeps the conversation practical and grounded—where innovation meets responsibility, and AI stays aligned with human values.
           </p>
         </div>
       </section>
@@ -747,7 +857,7 @@ Global Economy”</i>
 
         <div class="card reveal">
           <h3>Track overview</h3>
-          <p>Use these as anchors later if you want to deep-link into CSI/ICIBMAH sections.</p>
+          <p>Use these as future anchors if you want to deep-link into CSI/ICIBMAH sections later.</p>
           <div class="tags" aria-label="Tracks">
             <span class="tag">1 • Business Management, Leadership & Entrepreneurship</span>
             <span class="tag">2 • Accounting, Finance & Green Economics</span>
@@ -769,7 +879,6 @@ Global Economy”</i>
             <h2>Key dates</h2>
             <p>Submission and payment milestones at a glance.</p>
           </div>
-          <a class="btn" href="#connect">Register Now</a>
         </div>
 
         <div class="timeline reveal" aria-label="Timeline">
@@ -800,74 +909,39 @@ Global Economy”</i>
         </div>
       </section>
 
-      <section id="connect">
-        <div class="sectionHead">
-          <div>
-            <h2>Conference links</h2>
-            <p>This page is intentionally simple: two clear buttons, clean sections, and a polished look. When ICIBMAH is ready, just paste the URL in one place (JS).</p>
-          </div>
-        </div>
-
-        <div class="grid3">
-          <div class="card reveal">
-            <h3>CSI website</h3>
-            <p>Direct link to CSI. Currently set to CSI2024 (replace later when CSI2026 is published).</p>
-            <div class="ctaRow" style="margin-top:12px">
-              <a class="btn primary" id="btnCSI3" href="#" rel="noopener">Open CSI ↗</a>
-            </div>
-          </div>
-
-          <div class="card reveal">
-            <h3>ICIBMAH website</h3>
-            <p><i>Coming Soon</i></p>
-            <div class="ctaRow" style="margin-top:12px">
-              <a class="btn" id="btnICIBMAH3" href="#" rel="noopener">Open ICIBMAH ↗</a>
-            </div>
-          </div>
-
-          <div class="card reveal">
-            <h3>Secretariat</h3>
-            <p>
-              <strong>IC-BUSCLi 2026 Secretariat</strong><br/>
-              Faculty of Business and Communications (FPK), UniMAP<br/>
-              Tel: <strong>+604 979 8369</strong><br/>
-              Email: <strong>icbuscli@unimap.edu.my</strong>
-            </p>
-          </div>
-        </div>
-      </section>
-
       <footer>
         <div class="container">
           <div class="foot">
             <div>
               <div class="brand" style="gap:10px; margin-bottom:8px">
                 <span class="logoWrap" aria-hidden="true">
-                  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Crect width='76' height='76' rx='16' fill='rgba(255,255,255,0.10)'/%3E%3Cpath d='M18 40c8-16 20-18 40-10-6 18-20 28-40 10Z' fill='rgba(255,255,255,0.55)'/%3E%3C/svg%3E" alt="IC-BUSCLi logo placeholder">
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Crect width='80' height='80' rx='16' fill='rgba(255,255,255,0.10)'/%3E%3Cpath d='M18 46c10-20 26-22 46-12-6 22-24 34-46 12Z' fill='rgba(255,255,255,0.56)'/%3E%3C/svg%3E"
+                    alt="IC-BUSCLi logo placeholder">
                 </span>
                 <strong>IC-BUSCLi 2026</strong>
               </div>
-              <div>Faculty Business & Communication @ 2026 • CSI • ICIBMAH • PWCC, Penang</div>
+              <div>Faculty of Business & Communication • PWCC, Penang • Hybrid</div>
+              <div style="margin-top:6px; color:rgba(255,255,255,.60); font-size:13.5px;">
+                Secretariat: <strong style="color:rgba(255,255,255,.86)"><a href="mailto:icbuscli@unimap.edu.my">icbuscli@unimap.edu.my</a></strong> • +604 979 8369
+              </div>
             </div>
-            <div style="max-width: 52ch">
-              <div></div>
+            <div style="max-width: 56ch">
             </div>
           </div>
         </div>
       </footer>
+
     </div>
   </main>
 
   <!-- Modal -->
   <div class="modalWrap" id="modalWrap" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
-      <h3 id="modalTitle">ICIBMAH website — coming soon</h3>
-      <p id="modalText">
-        Coming Soon
-      </p>
+      <h3 id="modalTitle">ICIBMAH — coming soon</h3>
+      <p id="modalText"></p>
       <div class="modalActions">
         <button class="btn" id="closeModal" type="button">Close</button>
-        <a class="btn primary" href="#connect">Where to update</a>
       </div>
     </div>
   </div>
@@ -881,16 +955,10 @@ Global Economy”</i>
       icibmah: "" // paste ICIBMAH URL here later (e.g. "https://icibmah2026.example/")
     };
 
-    // Bind all CSI buttons
-    ["btnCSI","btnCSI2","btnCSI3"].forEach(id => {
-      const el = document.getElementById(id);
-      if(el){ el.href = LINKS.csi; el.target = "_blank"; }
-    });
-
-    // ICIBMAH buttons: open link if available, else modal
-    const icibBtns = ["btnICIBMAH","btnICIBMAH2","btnICIBMAH3"]
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
+    // Only ONE place for external links (strategic placement)
+    const btnCSI = document.getElementById("btnCSI");
+    const btnICIBMAH = document.getElementById("btnICIBMAH");
+    if(btnCSI){ btnCSI.href = LINKS.csi; btnCSI.target = "_blank"; }
 
     const modalWrap = document.getElementById("modalWrap");
     const closeModal = document.getElementById("closeModal");
@@ -905,23 +973,23 @@ Global Economy”</i>
       document.body.style.overflow = "";
     }
 
-    icibBtns.forEach(btn => {
-      btn.addEventListener("click", (e) => {
+    if(btnICIBMAH){
+      btnICIBMAH.addEventListener("click", (e) => {
         if(!LINKS.icibmah){
           e.preventDefault();
           openModal();
         } else {
-          btn.href = LINKS.icibmah;
-          btn.target = "_blank";
+          btnICIBMAH.href = LINKS.icibmah;
+          btnICIBMAH.target = "_blank";
         }
       });
-    });
+    }
 
     closeModal.addEventListener("click", hideModal);
     modalWrap.addEventListener("click", (e) => { if(e.target === modalWrap) hideModal(); });
     window.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalWrap.style.display === "grid") hideModal(); });
 
-    // Smooth scroll
+    // Smooth scroll for internal anchors only
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener("click", (e) => {
         const href = a.getAttribute("href");
@@ -946,7 +1014,7 @@ Global Economy”</i>
     }, {threshold: 0.12});
     document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
 
-    // Particle canvas (subtle)
+    // Subtle particle canvas (green-blue)
     const canvas = document.getElementById("fx");
     const ctx = canvas.getContext("2d");
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -966,12 +1034,12 @@ Global Economy”</i>
     const rnd = (min, max) => Math.random() * (max - min) + min;
 
     const palette = [
-      {r:34,g:211,b:238}, // cyan
-      {r:124,g:58,b:237}, // violet
-      {r:236,g:72,b:153}  // pink
+      {r:163,g:255,b:18},  // lime
+      {r:34,g:211,b:238},  // cyan
+      {r:59,g:130,b:246}   // blue
     ];
 
-    const DOTS = Math.min(105, Math.floor((W * H) / 15000));
+    const DOTS = Math.min(110, Math.floor((W * H) / 15000));
     const dots = Array.from({length: DOTS}, () => {
       const c = palette[Math.floor(rnd(0, palette.length))];
       return {
@@ -989,14 +1057,12 @@ Global Economy”</i>
 
       ctx.clearRect(0,0,W,H);
 
-      // soft vignette
-      const vg = ctx.createRadialGradient(W*0.5,H*0.45, 0, W*0.5,H*0.55, Math.max(W,H)*0.7);
+      const vg = ctx.createRadialGradient(W*0.5,H*0.42, 0, W*0.5,H*0.55, Math.max(W,H)*0.75);
       vg.addColorStop(0, "rgba(0,0,0,0)");
-      vg.addColorStop(1, "rgba(0,0,0,0.38)");
+      vg.addColorStop(1, "rgba(0,0,0,0.40)");
       ctx.fillStyle = vg;
       ctx.fillRect(0,0,W,H);
 
-      // dots and links
       for(let i=0;i<dots.length;i++){
         const a = dots[i];
         a.x += a.vx;
@@ -1013,7 +1079,7 @@ Global Economy”</i>
           const dy = a.y - b.y;
           const dist = Math.sqrt(dx*dx + dy*dy);
           if(dist < 120){
-            const alpha = (1 - dist / 120) * 0.14;
+            const alpha = (1 - dist / 120) * 0.13;
             ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -1024,7 +1090,7 @@ Global Economy”</i>
         }
 
         const {r,g,b} = a.c;
-        ctx.fillStyle = `rgba(${r},${g},${b},0.78)`;
+        ctx.fillStyle = `rgba(${r},${g},${b},0.76)`;
         ctx.beginPath();
         ctx.arc(a.x, a.y, a.r, 0, Math.PI*2);
         ctx.fill();
@@ -1033,6 +1099,32 @@ Global Economy”</i>
       requestAnimationFrame(draw);
     }
     draw();
+
+    // Lightweight “tilt” on theme image (adds wow; respects reduced motion)
+    const tilt = document.getElementById("tiltCard");
+    if(tilt && !prefersReduced){
+      let raf = null;
+      const max = 6; // degrees
+      function onMove(e){
+        const r = tilt.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+
+        const rx = (0.5 - y) * max;
+        const ry = (x - 0.5) * max;
+
+        if(raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          tilt.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        });
+      }
+      function reset(){
+        tilt.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+      }
+      tilt.addEventListener("mousemove", onMove);
+      tilt.addEventListener("mouseleave", reset);
+      tilt.addEventListener("touchend", reset, {passive:true});
+    }
   </script>
 </body>
 </html>
